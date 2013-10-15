@@ -20,3 +20,4 @@ It only requires to write the assertion methods you need, like this (example wri
         assertThat($('textarea')).isVisible().isEmpty();
     });
     
+See [this JSFiddle](http://jsfiddle.net/6nb6r/).
