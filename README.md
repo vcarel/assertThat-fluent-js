@@ -7,19 +7,15 @@ assertThat-fluent-js is a framework independant script for writing assertions li
 
 assertThat-fluent-js only requires to write the assertion methods you need, like this (example writen with [QUnit](http://qunitjs.com/)) :
 
-    // Define the assertion function once, somewhere
-    
+    // First, define the assertion functions once, somewhere :
     assertThat.define('isVisible', function() {
-	ok(this.is(':visible'));
+        ok(this.is(':visible'));
+    });
+    assertThat.define('isEmpty', function() {
+        strictEqual(this.val(), '');
     });
 
-    assertThat.define('isEmpty', function() {
-	strictEqual(this.val(), '');
-    });
-    
-    
-    // Then your tests
-    
+    // Then your tests :
     test("assert the textarea is visible and empty", function () {
-	assertThat($('textarea')).isVisible().isEmpty();
+        assertThat($('textarea')).isVisible().isEmpty();
     });
