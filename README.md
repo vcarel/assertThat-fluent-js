@@ -1,4 +1,4 @@
-# assertThat-fluent-js #
+# assertThat-fluent-js
 
 assertThat-fluent-js is a framework independant script for writing assertions like this :
 
@@ -21,3 +21,6 @@ It only requires to write the assertion methods you need, like this (example wri
     });
     
 See [this JSFiddle](http://jsfiddle.net/6nb6r/).
+
+### Thanks
+Thanks to [jjeeb](https://github.com/jbpotonnier) for helping me out :)
