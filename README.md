@@ -28,7 +28,7 @@ It only requires to write the assertion methods you need, like this (example wri
         assertThat($('textarea')).isVisible().isEmpty();
     });
     
-See [this JSFiddle](http://jsfiddle.net/6nb6r/) or the test/demo.js file for a more complex example.
+See [this JSFiddle](http://jsfiddle.net/6nb6r/1/) or the test/demo.js file for a more complex example.
 
 ### Thanks
 Thanks to [jjeeb](https://github.com/jbpotonnier) for helping me out :)
