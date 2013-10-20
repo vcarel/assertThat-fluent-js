@@ -8,6 +8,11 @@ or
 
 	assertThat(stub).called().once().with('foo', 'bar');
 
+or
+
+    assertThat('foo').is('foo');
+    assertThat('foo').isNot('bar');
+
 It only requires to write the assertion methods you need, like this (example writen with [jQuery](http://jquery.com/) and [QUnit](http://qunitjs.com/)) :
 
     // First, define the assertion functions once, somewhere :

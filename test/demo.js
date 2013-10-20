@@ -26,12 +26,12 @@ assertThat.define('once', function(context) {
         ok(false, 'bad usage: once() must be used after call()');
     }
 });
-assertThat.define('with', function(context, args) {
+assertThat.define('with', function(context) {
     if ('called' in context) {
         if (context.called.once) {
-            deepEqual(this.getCall(0).args, args);
+            deepEqual(this.getCall(0).args, context.callArgs);
         } else {
-            ok(this.calledWithExactly.apply(this, args));
+            ok(this.calledWithExactly.apply(this, context.callArgs));
         }
     } else {
         ok(false, 'bad usage: with(...) must be used after call()');

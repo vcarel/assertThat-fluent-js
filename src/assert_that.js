@@ -1,10 +1,12 @@
 var assertThat = (function () {
     var assertions = {};
 
-    var _assertThat = function (target) {
+    var _assertThat = function (toAssert) {
         function createAssertion(name) {
             return function () {
-                assertions[name].call(target, assertable._context, Array.prototype.slice.apply(arguments));
+                assertable._context.callArgs = Array.prototype.slice.apply(arguments);
+                assertable._context.toAssert = toAssert;
+                assertions[name].call(toAssert, assertable._context);
                 return assertable;
             };
         }
