@@ -1,36 +1,39 @@
-assertThat.define('is', function(context) {
-    var expected = context.callArgs[0];
-    var actual = context.toAssert;
-    deepEqual(actual, expected);
-});
+(function () {
 
-assertThat.define('isNot', function(context) {
-    var notExpected = context.callArgs[0];
-    var actual = context.toAssert;
-    notDeepEqual(actual, notExpected);
-});
+    assertThat.define('is', function(context) {
+        var expected = context.callArgs[0];
+        var actual = context.toAssert;
+        deepEqual(actual, expected, 'assertThat(' + prettify(actual) + ').is(' + prettify(expected) + ')');
+    });
 
-assertThat.define('throws', function(context) {
-    var expected = context.callArgs[0];
-    var callback = context.toAssert;
+    assertThat.define('isNot', function(context) {
+        var notExpected = context.callArgs[0];
+        var actual = context.toAssert;
+        notDeepEqual(actual, notExpected, 'assertThat(' + prettify(actual) + ').isNot(' + prettify(notExpected) + ')');
+    });
 
-    // QUnit cannot distinguish exceptions based on their content. It only compares their types.
-    if (expected instanceof Function) {
-        // Using QUnit when expected is a function, assuming it is the constructor of an Exception object.
-        throws(callback, expected);
-    } else {
-        var actual;
-        try {
-            context.toAssert();
-        } catch (e) {
-            actual = e;
-        }
-        if (expected === undefined) {
-            notStrictEqual(undefined, actual);
+    assertThat.define('throws', function(context) {
+        var expected = context.callArgs[0];
+        var toExecute = context.toAssert;
+
+        // QUnit cannot distinguish exceptions based on their content. It only compares their types.
+        if (expected instanceof Function) {
+            // Using QUnit when expected is a function, assuming it is the constructor of an Exception object.
+            throws(toExecute, expected, 'assertThat(' + prettify(toExecute) + ').throws(' + prettify(expected) + ')');
         } else {
-            strictEqual(actual, expected);
+            var actual;
+            try {
+                context.toAssert();
+            } catch (e) {
+                actual = e;
+            }
+            if (expected === undefined) {
+                notStrictEqual(undefined, actual, 'assertThat(' + prettify(toExecute) + ').throws()');
+            } else {
+                strictEqual(actual, expected, 'assertThat(' + prettify(toExecute) + ').throws(' + prettify(expected) + ')');
+            }
         }
-    }
-});
+    });
 
+})();
 

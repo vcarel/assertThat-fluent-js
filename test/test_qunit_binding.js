@@ -60,7 +60,7 @@ test('Exception with exception object', function () {
 
 test('Exception with custom exception object', function () {
     function CustomException () {}
-    assertThat(function () {
+    assertThat(function Foo() {
         throw new CustomException();
     }).throws(CustomException);
 });
