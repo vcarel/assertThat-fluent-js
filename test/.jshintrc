@@ -6,29 +6,9 @@
     "newcap": true,
     "noarg": true,
     "sub": true,
-    "undef": true,
+    "undef": false,
     "unused": true,
     "boss": true,
     "eqnull": true,
-    "browser": true,
-    "predef": [
-        "assertThat",
-        "sinon",
-        "$",
-        "QUnit",
-        "module",
-        "test",
-        "asyncTest",
-        "expect",
-        "start",
-        "stop",
-        "ok",
-        "equal",
-        "notEqual",
-        "deepEqual",
-        "notDeepEqual",
-        "strictEqual",
-        "notStrictEqual",
-        "raises"
-    ]
+    "browser": true
 }
