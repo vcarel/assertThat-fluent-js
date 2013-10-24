@@ -1,4 +1,4 @@
-module('assert_that', {
+module('assert_that/core', {
     setup: function () {
         this.callback = sinon.stub();
         assertThat.define('says', this.callback);
@@ -26,7 +26,41 @@ test('the session is reused at every calls, the context is not', function () {
 });
 
 
+module('assert_that/prettify');
 
+test('boolean', function () {
+    strictEqual(assertThat.prettify(true), 'true');
+});
 
+test('number', function () {
+    strictEqual(assertThat.prettify(42), '42');
+});
 
+test('string', function () {
+    strictEqual(assertThat.prettify('abc'), '"abc"');
+});
 
+test('undefined', function () {
+    strictEqual(assertThat.prettify(undefined), 'undefined');
+});
+
+test('null', function () {
+    strictEqual(assertThat.prettify(null), 'null');
+});
+
+test('array', function () {
+    deepEqual(assertThat.prettify(['foo', 1]), '["foo",1]');
+});
+
+test('json / other object', function () {
+    deepEqual(assertThat.prettify({}), '{}');
+    deepEqual(assertThat.prettify({foo: 'bar'}), '{"foo":"bar"}');
+});
+
+test('function with name', function () {
+    strictEqual(assertThat.prettify(function sayHello() {}), 'function sayHello');
+});
+
+test('function without name', function () {
+    strictEqual(assertThat.prettify(function () {}), 'anonymous function');
+});
