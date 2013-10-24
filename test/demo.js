@@ -14,21 +14,21 @@ test("assert the textarea is visible and empty", function () {
 
 module('Chained assertions example with sinonJS');
 
-assertThat.define('called', function(context) {
-    context.called = {};
+assertThat.define('called', function(context, session) {
+    session.called = {};
     ok(this.called);
 });
-assertThat.define('once', function(context) {
-    if ('called' in context) {
+assertThat.define('once', function(context, session) {
+    if ('called' in session) {
         ok(this.calledOnce);
-        context.called.once = true;
+        session.called.once = true;
     } else {
         ok(false, 'bad usage: once() must be used after call()');
     }
 });
-assertThat.define('with', function(context) {
-    if ('called' in context) {
-        if (context.called.once) {
+assertThat.define('with', function(context, session) {
+    if ('called' in session) {
+        if (session.called.once) {
             deepEqual(this.getCall(0).args, context.callArgs);
         } else {
             ok(this.calledWithExactly.apply(this, context.callArgs));

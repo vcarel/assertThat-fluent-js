@@ -2,16 +2,16 @@ var assertThat = (function () {
     var assertions = {};
 
     var _assertThat = function (toAssert) {
+        var assertable = {};
+        var session = {};
+
         function createAssertion(name) {
             return function () {
-                assertable._context.callArgs = Array.prototype.slice.apply(arguments);
-                assertable._context.toAssert = toAssert;
-                assertions[name].call(toAssert, assertable._context);
+                var context = {toAssert: toAssert, callArgs: Array.prototype.slice.apply(arguments)};
+                assertions[name].call(toAssert, context, session);
                 return assertable;
             };
         }
-
-        var assertable = {_context: {}};
 
         for (var name in assertions) {
             if (assertions.hasOwnProperty(name)) {
