@@ -7,7 +7,12 @@ var assertThat = (function () {
 
         function createAssertion(name) {
             return function () {
-                var context = {toAssert: toAssert, callArgs: Array.prototype.slice.apply(arguments)};
+                var callArgs = Array.prototype.slice.apply(arguments);
+                var context = {
+                    toAssert: toAssert,
+                    callArgs: callArgs,
+                    getMessage: function () { return _assertThat.getMessage(name, toAssert, callArgs); }
+                };
                 assertions[name].call(toAssert, context, session);
                 return assertable;
             };
@@ -42,6 +47,16 @@ var assertThat = (function () {
                 }
         }
         return JSON.stringify(obj);
+    };
+
+    _assertThat.getMessage = function (assertionName, toAssert, callArgs) {
+        var prettyCallArgs;
+        if (callArgs instanceof Array) {
+            prettyCallArgs = callArgs.map(function (item) { return this.prettify(item); }, this).join(',');
+        } else {
+            prettyCallArgs = this.prettify(callArgs);
+        }
+        return 'assertThat(' + this.prettify(toAssert) + ').'+ assertionName + '(' + prettyCallArgs  + ')';
     };
 
     return _assertThat;

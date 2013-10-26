@@ -8,7 +8,11 @@ module('assert_that/core', {
 test('assert_that provides 2 arguments ; first is a context containing what to assert and call parameters, second is session', function () {
     assertThat('duke').says('hello', 'world');
     ok(this.callback.calledOnce);
-    deepEqual(this.callback.getCall(0).args, [{toAssert: 'duke', callArgs: ['hello', 'world']}, {}]);
+    ok(this.callback.calledOnce);
+    strictEqual(this.callback.getCall(0).args.length, 2);
+    strictEqual(this.callback.getCall(0).args[0].toAssert, 'duke');
+    deepEqual(this.callback.getCall(0).args[0].callArgs, ['hello', 'world']);
+    deepEqual(this.callback.getCall(0).args[1], {});
 });
 
 test('the session is reused at every calls, the context is not', function () {
@@ -63,4 +67,23 @@ test('function with name', function () {
 
 test('function without name', function () {
     strictEqual(assertThat.prettify(function () {}), 'anonymous function');
+});
+
+
+module('context.getMessage');
+
+test('getMessage returns a message explaining the assertion with prettified arguments', function () {
+    var message = null;
+    assertThat.define('says', function(context) {
+        message = context.getMessage();
+    });
+
+    assertThat('duke').says('hello world');
+    strictEqual(message, 'assertThat("duke").says("hello world")');
+
+    assertThat('duke').says('hello', 'world');
+    strictEqual(message, 'assertThat("duke").says("hello","world")');
+
+    assertThat('duke').says('hello', ['foo', 'bar']);
+    strictEqual(message, 'assertThat("duke").says("hello",["foo","bar"])');
 });
