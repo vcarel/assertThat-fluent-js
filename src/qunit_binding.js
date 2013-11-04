@@ -47,11 +47,20 @@
 
     assertThat.define('contains', function(context, session) {
         if (session.not) {
-            ok(context.toAssert.indexOf(context.callArgs[0]) === -1);
+            ok(context.toAssert.indexOf(context.callArgs[0]) === -1, context.getMessage());
         } else {
-            ok(context.toAssert.indexOf(context.callArgs[0]) !== -1);
+            ok(context.toAssert.indexOf(context.callArgs[0]) !== -1, context.getMessage());
         }
     });
+
+    assertThat.define('belongsTo', function(context, session) {
+        if (session.not) {
+            ok(context.callArgs[0].indexOf(context.toAssert) === -1, context.getMessage());
+        } else {
+            ok(context.callArgs[0].indexOf(context.toAssert) !== -1, context.getMessage());
+        }
+    });
+
 
 })();
 

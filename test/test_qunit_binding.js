@@ -70,3 +70,17 @@ test('Comparing arrays', function () {
     assertThat(['hello', 'world']).contains('world');
     assertThat(['hello', 'world']).not().contains('wo');
 });
+
+
+module('Test belongsTo()');
+
+test('Comparing strings', function () {
+    assertThat('world').belongsTo('hello world');
+    assertThat('bar').not().belongsTo('foo');
+});
+
+test('Comparing arrays', function () {
+    assertThat('world').belongsTo(['hello', 'world']);
+    assertThat('wo').not().belongsTo(['hello', 'world']);
+});
+
