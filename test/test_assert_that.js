@@ -88,6 +88,17 @@ test('getMessage returns a message explaining the assertion with prettified argu
     strictEqual(message, 'assertThat("duke").says("hello",["foo","bar"])');
 });
 
+test('the returned message relates all calls', function () {
+    var message = null;
+    assertThat.define('says', function() {});
+    assertThat.define('and', function(context) {
+        message = context.getMessage();
+    });
+
+    assertThat('duke').says('hello').and('world');
+    strictEqual(message, 'assertThat("duke").says("hello").and("world")');
+});
+
 test('getMessage returns the message from the related context, if any', function () {
     var messages = [];
     assertThat.define('says', function(context) {

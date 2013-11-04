@@ -60,7 +60,5 @@
             ok(context.callArgs[0].indexOf(context.toAssert) !== -1, context.getMessage());
         }
     });
-
-
 })();
 
