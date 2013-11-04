@@ -1,15 +1,25 @@
 (function () {
 
-    assertThat.define('is', function(context) {
-        var expected = context.callArgs[0];
-        var actual = context.toAssert;
-        deepEqual(actual, expected, context.getMessage());
+    assertThat.define('not', function(context, session) {
+        session.not = true;
     });
 
-    assertThat.define('isNot', function(context) {
-        var notExpected = context.callArgs[0];
+    assertThat.define('is', function(context, session) {
         var actual = context.toAssert;
-        notDeepEqual(actual, notExpected, context.getMessage());
+        if (session.not) {
+            notDeepEqual(actual, context.callArgs[0], context.getMessage());
+        } else {
+            deepEqual(actual, context.callArgs[0], context.getMessage());
+        }
+    });
+
+    // Syntactic sugar for not().is()
+    assertThat.define('isNot', function(context, session) {
+        if (session.not) {
+            assertThat(context.toAssert).within(context).is(context.callArgs[0]);
+        } else {
+            assertThat(context.toAssert).within(context).not().is(context.callArgs[0]);
+        }
     });
 
     assertThat.define('throws', function(context) {
@@ -32,6 +42,14 @@
             } else {
                 strictEqual(actual, expected, context.getMessage());
             }
+        }
+    });
+
+    assertThat.define('contains', function(context, session) {
+        if (session.not) {
+            ok(context.toAssert.indexOf(context.callArgs[0]) === -1);
+        } else {
+            ok(context.toAssert.indexOf(context.callArgs[0]) !== -1);
         }
     });
 
