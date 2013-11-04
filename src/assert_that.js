@@ -5,13 +5,24 @@ var assertThat = (function () {
         var assertable = {};
         var session = {};
 
+        var messageFunction = null;
+        assertable.within = function (context) {
+            messageFunction = context.getMessage;
+            return assertable;
+        };
+
         function createAssertion(name) {
             return function () {
                 var callArgs = Array.prototype.slice.apply(arguments);
                 var context = {
                     toAssert: toAssert,
                     callArgs: callArgs,
-                    getMessage: function () { return _assertThat.getMessage(name, toAssert, callArgs); }
+                    getMessage: function () {
+                        if (messageFunction) {
+                            return messageFunction();
+                        }
+                        return _assertThat.getMessage(name, toAssert, callArgs);
+                    }
                 };
                 assertions[name].call(toAssert, context, session);
                 return assertable;

@@ -87,3 +87,21 @@ test('getMessage returns a message explaining the assertion with prettified argu
     assertThat('duke').says('hello', ['foo', 'bar']);
     strictEqual(message, 'assertThat("duke").says("hello",["foo","bar"])');
 });
+
+test('getMessage returns the message from the related context, if any', function () {
+    var messages = [];
+    assertThat.define('says', function(context) {
+        messages.push(context.getMessage());
+    });
+    assertThat.define('makesASpeech', function(context) {
+        context.callArgs.forEach(function(sentence) {
+            assertThat(context.toAssert).within(context).says(sentence);
+        });
+    });
+
+    assertThat('duke').makesASpeech('check it baby !', 'wanna dance ?');
+    deepEqual(messages, [
+        'assertThat("duke").makesASpeech("check it baby !","wanna dance ?")',
+        'assertThat("duke").makesASpeech("check it baby !","wanna dance ?")'
+    ]);
+});
