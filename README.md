@@ -4,33 +4,33 @@
 
 assertThat-fluent-js is a framework independant script for writing assertions like this :
 
-	assertThat(element).isVisible().isEmpty();
+	assert_that(element).is_visible().isEmpty();
 
 or
 
-	assertThat(stub).called().once().with('foo', 'bar');
+	assert_that(stub).called().once().with('foo', 'bar');
 
 or
 
-    assertThat('foo').is('foo');
-    assertThat('foo').isNot('bar');
+    assert_that('foo').is('foo');
+    assert_that('foo').is_not('bar');
 
 It only requires to write the assertion methods you need, like this (example writen with [jQuery](http://jquery.com/) and [QUnit](http://qunitjs.com/)) :
 
     // First, define the assertion functions once, somewhere :
-    assertThat.define('isVisible', function() {
+    assert_that.define('isVisible', function() {
         ok(this.is(':visible'));
     });
-    assertThat.define('isEmpty', function() {
+    assert_that.define('isEmpty', function() {
         strictEqual(this.val(), '');
     });
 
     // Then your tests :
     test("assert the textarea is visible and empty", function () {
-        assertThat($('textarea')).isVisible().isEmpty();
+        assert_that($('textarea')).is_visible().isEmpty();
     });
     
-See [this JSFiddle](http://jsfiddle.net/6nb6r/1/) or the test/demo.js file for a more complex example.
+See [this JSFiddle](http://jsfiddle.net/6nb6r/2/) or the test/demo.js file for a more complex example.
 
 ### Thanks
 Thanks to [jjeeb](https://github.com/jbpotonnier) for helping me out :)
