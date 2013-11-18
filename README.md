@@ -4,7 +4,7 @@
 
 assertThat-fluent-js is a framework independant script for writing assertions like this :
 
-	assert_that(element).is_visible().isEmpty();
+	assert_that(element).is_visible().is_empty();
 
 or
 
@@ -18,16 +18,16 @@ or
 It only requires to write the assertion methods you need, like this (example writen with [jQuery](http://jquery.com/) and [QUnit](http://qunitjs.com/)) :
 
     // First, define the assertion functions once, somewhere :
-    assert_that.define('isVisible', function() {
+    assert_that.define('is_visible', function() {
         ok(this.is(':visible'));
     });
-    assert_that.define('isEmpty', function() {
+    assert_that.define('is_empty', function() {
         strictEqual(this.val(), '');
     });
 
     // Then your tests :
     test("assert the textarea is visible and empty", function () {
-        assert_that($('textarea')).is_visible().isEmpty();
+        assert_that($('textarea')).is_visible().is_empty();
     });
     
 See [this JSFiddle](http://jsfiddle.net/6nb6r/2/) or the test/demo.js file for a more complex example.
