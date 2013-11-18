@@ -1,86 +1,82 @@
-module('Test is() and not.is()');
+module('Test is() and is_not()');
 
 test('Comparing booleans', function () {
-    assertThat(true).is(true);
-    assertThat(0).is(0);
+    assert_that(true).is(true);
+    assert_that(0).is(0);
 
-    assertThat(false).not().is(true);
-    assertThat(undefined).not().is(false);
-    assertThat(0).not().is(false);
-    assertThat([]).not().is(false);
-    assertThat({}).not().is(false);
+    assert_that(false).is_not(true);
+    assert_that(undefined).is_not(false);
+    assert_that(0).is_not(false);
+    assert_that([]).is_not(false);
+    assert_that({}).is_not(false);
 });
 
 test('Comparing strings', function () {
-    assertThat('').is('');
-    assertThat('foo').is('foo');
+    assert_that('').is('');
+    assert_that('foo').is('foo');
 
-    assertThat('foo').not().is('bar');
+    assert_that('foo').is_not('bar');
 });
 
 test('Comparing arrays', function () {
-    assertThat([]).is([]);
-    assertThat([1, 2, 3, [4, 5]]).is([1, 2, 3, [4, 5]]);
+    assert_that([]).is([]);
+    assert_that([1, 2, 3, [4, 5]]).is([1, 2, 3, [4, 5]]);
 
-    assertThat([1, 2, 3, [4, 5]]).not().is([1, 2, 3, []]);
+    assert_that([1, 2, 3, [4, 5]]).is_not([1, 2, 3, []]);
 });
 
 test('Comparing jsons', function () {
-    assertThat({}).is({});
-    assertThat({a: {b: [1, 2]}}).is({a: {b: [1, 2]}});
+    assert_that({}).is({});
+    assert_that({a: {b: [1, 2]}}).is({a: {b: [1, 2]}});
 
-    assertThat({a: {b: [1, 2]}}).not().is({a: {b: [  ]}});
-});
-
-test('isNot is an alias for not().is()', function () {
-    assertThat(false).isNot(true);
+    assert_that({a: {b: [1, 2]}}).is_not({a: {b: [  ]}});
 });
 
 
 module('Test throws()');
 
 test('Exception without exception object', function () {
-    assertThat(function () {
+    assert_that(function () {
         throw 'This is an error';
     }).throws();
 });
 
 test('Exception with exception object', function () {
-    assertThat(function () {
+    assert_that(function () {
         throw 'This is an error';
     }).throws('This is an error');
 });
 
 test('Exception with custom exception object', function () {
     function CustomException () {}
-    assertThat(function Foo() {
+    assert_that(function Foo() {
         throw new CustomException();
     }).throws(CustomException);
 });
 
 
-module('Test contains()');
+module('Test contains() and not_contains()');
 
 test('Comparing strings', function () {
-    assertThat('hello world').contains('world');
-    assertThat('foo').not().contains('bar');
+    assert_that('hello world').contains('world');
+    assert_that('foo').not_contains('bar');
 });
 
 test('Comparing arrays', function () {
-    assertThat(['hello', 'world']).contains('world');
-    assertThat(['hello', 'world']).not().contains('wo');
+    assert_that(['hello', 'world']).contains('world');
+    assert_that(['hello', 'world']).not_contains('wo');
 });
 
 
-module('Test belongsTo()');
+module('Test belongs_to() and not_belongs_to()');
 
 test('Comparing strings', function () {
-    assertThat('world').belongsTo('hello world');
-    assertThat('bar').not().belongsTo('foo');
+    assert_that('world').belongs_to('hello world');
+    assert_that('bar').not_belongs_to('foo');
 });
 
 test('Comparing arrays', function () {
-    assertThat('world').belongsTo(['hello', 'world']);
-    assertThat('wo').not().belongsTo(['hello', 'world']);
+    assert_that('world').belongs_to(['hello', 'world']);
+    assert_that('wo').not_belongs_to(['hello', 'world']);
 });
 
