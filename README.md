@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vcarel/assertThat-fluent-js.png?branch=master)](https://travis-ci.org/vcarel/assertThat-fluent-js)
+
 # assertThat-fluent-js
 
 assertThat-fluent-js is a framework independant script for writing assertions like this :
